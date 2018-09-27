@@ -36,13 +36,13 @@ public final class PcDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create a String that contains the SQL statement to create the product table
-        String SQL_CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + " ("
+        String SQL_CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + "("
                 + ProductContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
-                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " TEXT, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER NOT NULL, "
-                + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + "TEXT, "
-                + ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + "INTEGER );";
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT, "
+                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " INTEGER, "
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER, "
+                + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT, "
+                + ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " INTEGER, )";
 
         // Execute the SQL statement
         db.execSQL ( SQL_CREATE_PRODUCT_TABLE );

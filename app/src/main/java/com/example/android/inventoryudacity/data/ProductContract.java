@@ -16,7 +16,7 @@ public final class ProductContract {// To prevent someone from accidentally inst
         public final static String TABLE_NAME = "product";
 
         /**
-         * Unique ID number for the pet (only for use in the database table).
+         * Unique ID number for the product (only for use in the database table).
          *
          * Type: INTEGER
          */
@@ -44,18 +44,19 @@ public final class ProductContract {// To prevent someone from accidentally inst
         public final static String COLUMN_PRODUCT_PRICE ="price";
 
         /**
+         * Supplier Name
+         *
+         * Type: Text
+         */
+        public final static String COLUMN_SUPPLIER_NAME ="supplier name";
+        /**
          * Phone Number
          *
          * Type Integer
          */
         public final static String COLUMN_PHONE_NUMBER = "phone number";
 
-        /**
-         * Supplier Name
-         *
-         * Type: Text
-         */
-        public final static String COLUMN_SUPPLIER_NAME ="supplier name";
+
     }
 
 }
