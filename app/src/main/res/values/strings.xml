@@ -30,6 +30,9 @@
     <!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
     <string name="category_quantity">Quantity</string>
 
+    !-- Label for unit information in the editor [CHAR LIMIT=30] -->
+    <string name="unit_dollar">$</string>
+
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
     <string name="hint_product_name">Name</string>
 

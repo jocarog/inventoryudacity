@@ -37,24 +37,18 @@ public class PcDbHelper extends SQLiteOpenHelper {
         String SQL_CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + " ("
                 + ProductContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
-                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " TEXT, "
-                + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT, "
-                + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER);";
-
-
-        String SQL_DELETE_BOOKS_TABLE =
-                "DROP TABLE IF EXISTS " + ProductContract.ProductEntry.TABLE_NAME;
+                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " INTEGER, "
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " TEXT NOT NULL, "
+                + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT NOT NULL, "
+                + ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " INTEGER NOT NULL );";
 
         // Execute the SQL statement
         db.execSQL ( SQL_CREATE_PRODUCT_TABLE );
     }
 
-    /**
-     * This is called when the database needs to be upgraded.
-     */
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // The database is still at version 1, so there's nothing to do be done here.
+
     }
 }

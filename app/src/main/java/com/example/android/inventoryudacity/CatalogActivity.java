@@ -38,6 +38,11 @@ public class CatalogActivity extends AppCompatActivity {
         mDbHelper = new PcDbHelper ( this );
     }
 
+    @Override
+    protected void onStart (){
+        super.onStart ();
+        displayDatabaseInfo ();
+    }
     /**
      * Temporary helper method to display information in the onscreen TextView about the state of
      * the pets database.
@@ -69,7 +74,7 @@ public class CatalogActivity extends AppCompatActivity {
 
         try {
             // Create a header in the Text View that looks like this:
-            //
+
             // The product table contains <number of rows in Cursor> products.
             // _id - product name - quantity - price - supplier - phone number
             //
@@ -98,9 +103,9 @@ public class CatalogActivity extends AppCompatActivity {
                 int currentID = cursor.getInt ( idColumnIndex );
                 String currentName = cursor.getString ( nameColumnIndex );
                 String currentQuantity = cursor.getString ( quantityColumnIndex );
-                int currentPrice = cursor.getInt ( priceColumnIndex );
-                int currentSupplier = cursor.getInt ( supplierColumnIndex );
-                int currentPhone = cursor.getInt ( phoneColumnIndex );
+                String currentPrice = cursor.getString ( priceColumnIndex );
+                String currentSupplier = cursor.getString ( supplierColumnIndex );
+                String currentPhone = cursor.getString ( phoneColumnIndex );
 
                 // Display the values from each column of the current row in the cursor in the TextView
                 displayView.append ( ("\n" + currentID + " - " +
@@ -108,7 +113,7 @@ public class CatalogActivity extends AppCompatActivity {
                         currentQuantity + " - " +
                         currentPrice + " - " +
                         currentSupplier + " - " +
-                        currentPhone) );
+                        currentPhone));
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
@@ -128,10 +133,10 @@ public class CatalogActivity extends AppCompatActivity {
         // and Toto's pet attributes are the values.
         ContentValues values = new ContentValues ();
         values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, "Earrings" );
-        values.put ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY, "5" );
-        values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, "$10" );
-        values.put ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME, "Millanus" );
-        values.put ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER, "(305)545-9778" );
+        values.put ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY, " 5 " );
+        values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, " $10 " );
+        values.put ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME, " Millanus " );
+        values.put ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER, " 3055459778 " );
         // The third argument is the ContentValues object containing the info for Toto.
         long newRowId = db.insert ( ProductContract.ProductEntry.TABLE_NAME, null, values );
     }
