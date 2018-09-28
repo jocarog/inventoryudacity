@@ -37,7 +37,7 @@
                 android:id="@+id/edit_product_quantity"
                 style="@style/EditorFieldStyle"
                 android:hint="@string/hint_product_quantity"
-                android:inputType="textCapWords" />
+                android:inputType="numberDecimal" />
 
             <!-- price field -->
             <EditText

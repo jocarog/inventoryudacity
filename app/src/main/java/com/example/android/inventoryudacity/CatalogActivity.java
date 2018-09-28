@@ -81,7 +81,7 @@ public class CatalogActivity extends AppCompatActivity {
                     ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " - " +
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " - " +
                     ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " - " +
-                    ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + "\n" );
+                    ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + "- " );
 
             // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry._ID );

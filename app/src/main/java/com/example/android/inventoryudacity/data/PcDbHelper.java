@@ -3,17 +3,13 @@ package com.example.android.inventoryudacity.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 
-import static android.icu.text.NumberFormat.Field.INTEGER;
+public class PcDbHelper extends SQLiteOpenHelper {
 
-public final class PcDbHelper extends SQLiteOpenHelper {
 
-    public static final String LOG_TAG = PcDbHelper.class.getSimpleName ();
+    public static final String LOG_TAG = PcDbHelper.class.getSimpleName();
 
-    /**
-     * Name of the database file
-     */
+    /** Name of the database file */
     private static final String DATABASE_NAME = "product.db";
 
     /**
@@ -27,7 +23,7 @@ public final class PcDbHelper extends SQLiteOpenHelper {
      * @param context of the app
      */
     public PcDbHelper(Context context) {
-        super ( context, DATABASE_NAME, null, DATABASE_VERSION );
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     /**
@@ -35,17 +31,16 @@ public final class PcDbHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        // Create a String that contains the SQL statement to create the product table
-        String SQL_CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + "("
+        // Create a String that contains the SQL statement to create the pets table
+        String SQL_CREATE_PRODUCT_TABLE =  "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + " ("
                 + ProductContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT, "
-                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " INTEGER, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER, "
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
+                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " TEXT, "
                 + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT, "
-                + ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " INTEGER, )";
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER);";
 
         // Execute the SQL statement
-        db.execSQL ( SQL_CREATE_PRODUCT_TABLE );
+        db.execSQL(SQL_CREATE_PRODUCT_TABLE);
     }
 
     /**

@@ -48,13 +48,13 @@ public final class ProductContract {// To prevent someone from accidentally inst
          *
          * Type: Text
          */
-        public final static String COLUMN_SUPPLIER_NAME ="supplier name";
+        public final static String COLUMN_SUPPLIER_NAME ="supplier";
         /**
          * Phone Number
          *
          * Type Integer
          */
-        public final static String COLUMN_PHONE_NUMBER = "phone number";
+        public final static String COLUMN_PHONE_NUMBER = "phone";
 
 
     }
