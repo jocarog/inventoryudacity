@@ -138,8 +138,9 @@ public class CatalogActivity extends AppCompatActivity {
         values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, " $10 " );
         values.put ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME, " Millanus " );
         values.put ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER, " 3055459778 " );
-        // The third argument is the ContentValues object containing the info for Toto.
+        // The third argument is the ContentValues object containing the dummy info.
         long newRowId = db.insert ( ProductContract.ProductEntry.TABLE_NAME, null, values );
+
     }
 
     @Override
