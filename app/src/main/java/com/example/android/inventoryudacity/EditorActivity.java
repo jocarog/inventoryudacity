@@ -35,14 +35,14 @@ public class EditorActivity extends AppCompatActivity {
     private EditText mQuantityEditText;
 
     /**
-     * EditText field to enter the supplier name
-     */
-    private EditText mSupplierEditText;
-
-    /**
      * EditText field to enter the product price
      */
     private EditText mPriceEditText;
+
+    /**
+     * EditText field to enter the supplier name
+     */
+    private EditText mSupplierEditText;
 
     /**
      * EditText field to enter the phone number
@@ -58,8 +58,8 @@ public class EditorActivity extends AppCompatActivity {
         // Find all relevant views that we will need to read user input from
         mProductEditText = (EditText) findViewById ( R.id.edit_product_name );
         mQuantityEditText = (EditText) findViewById ( R.id.edit_product_quantity );
-        mSupplierEditText = (EditText) findViewById ( R.id.edit_product_supplier );
         mPriceEditText = (EditText) findViewById ( R.id.edit_product_price );
+        mSupplierEditText = (EditText) findViewById ( R.id.edit_product_supplier );
         mPhoneEditText = (EditText) findViewById ( R.id.edit_supplier_phone_number );
     }
 

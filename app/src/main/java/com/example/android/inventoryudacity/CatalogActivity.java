@@ -39,10 +39,11 @@ public class CatalogActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart (){
+    protected void onStart() {
         super.onStart ();
         displayDatabaseInfo ();
     }
+
     /**
      * Temporary helper method to display information in the onscreen TextView about the state of
      * the pets database.
@@ -84,9 +85,9 @@ public class CatalogActivity extends AppCompatActivity {
             displayView.append ( ProductContract.ProductEntry._ID + " - " +
                     ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " - " +
                     ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " - " +
+                    ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + "- " +
                     ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " - " +
-                    ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " - " +
-                    ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + "- " );
+                    ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " - " );
 
             // Figure out the index of each column
             int idColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry._ID );
@@ -113,7 +114,7 @@ public class CatalogActivity extends AppCompatActivity {
                         currentQuantity + " - " +
                         currentPrice + " - " +
                         currentSupplier + " - " +
-                        currentPhone));
+                        currentPhone) );
             }
         } finally {
             // Always close the cursor when you're done reading from it. This releases all its
