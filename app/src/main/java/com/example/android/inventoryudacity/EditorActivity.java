@@ -1,10 +1,12 @@
 package com.example.android.inventoryudacity;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -102,7 +104,6 @@ public class EditorActivity extends AppCompatActivity {
             Toast.makeText ( this, "Product saved with row id: " + newRowId, Toast.LENGTH_SHORT ).show ();
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_editor.xml file.
@@ -124,6 +125,7 @@ public class EditorActivity extends AppCompatActivity {
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
+                //do nothing for now
                 return true;
             // Respond to a click on the "Up" arrow button in the app bar
             case android.R.id.home:
@@ -133,4 +135,7 @@ public class EditorActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected ( item );
     }
-}
+    /**
+     * Prompt the user to confirm that they want to delete this book.
+     */
+    }
