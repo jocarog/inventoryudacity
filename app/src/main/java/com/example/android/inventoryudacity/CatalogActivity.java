@@ -61,7 +61,7 @@ public class CatalogActivity extends AppCompatActivity {
                 ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
                 ProductContract.ProductEntry.COLUMN_PHONE_NUMBER};
 
-        // Perform a query on the pets table
+        // Perform a query on the product table
         Cursor cursor = db.query (
                 ProductContract.ProductEntry.TABLE_NAME,   // The table to query
                 projection,            // The columns to return
@@ -162,7 +162,7 @@ public class CatalogActivity extends AppCompatActivity {
                 return true;
             // Respond to a click on the "Delete all entries" menu option
             case R.id.action_delete_all_entries:
-
+                //do nothing for now
                 return true;
         }
         return super.onOptionsItemSelected ( item );

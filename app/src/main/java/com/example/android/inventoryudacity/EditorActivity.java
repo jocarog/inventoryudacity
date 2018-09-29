@@ -105,6 +105,7 @@ public class EditorActivity extends AppCompatActivity {
             Toast.makeText ( this, "Product saved with row id: " + newRowId, Toast.LENGTH_SHORT ).show ();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu options from the res/menu/menu_editor.xml file.
@@ -139,4 +140,4 @@ public class EditorActivity extends AppCompatActivity {
     /**
      * Prompt the user to confirm that they want to delete this book.
      */
-    }
+}
