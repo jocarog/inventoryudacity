@@ -46,16 +46,8 @@ public class PcDbHelper extends SQLiteOpenHelper {
         db.execSQL ( SQL_CREATE_PRODUCT_TABLE );
     }
 
-    // SQL query to delete the PRODUCT table
-    private static final String SQL_DELETE_PRODUCT_TABLE =
-            "DROP TABLE IF EXISTS " + ProductContract.ProductEntry.TABLE_NAME;
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL(SQL_DELETE_PRODUCT_TABLE);
-        onCreate(db);
-    }
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
+        onUpgrade ( db, oldVersion, newVersion );
     }
 }
