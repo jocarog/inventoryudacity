@@ -13,6 +13,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import static android.widget.Toast.LENGTH_SHORT;
+import static com.example.android.inventoryudacity.data.ProductContract.ProductEntry.COLUMN_PHONE_NUMBER;
+import static com.example.android.inventoryudacity.data.ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME;
 
 public class ProductProvider extends ContentProvider {
     /**
@@ -147,23 +149,23 @@ public class ProductProvider extends ContentProvider {
             throw new IllegalArgumentException ( "Product requires a name" );
         }
         // If the quantity is provided, check that it's greater than or equal to 0
-        Integer quantity = values.getAsInteger ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY );
+        Double quantity = values.getAsDouble ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY );
         if (quantity != null && quantity < 0) {
             throw new IllegalArgumentException ( "Product requires valid quantity" );
         }
         // If the price is provided, check that it's greater than or equal to $0
-        Integer price = values.getAsInteger ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
-        if (price != null && price < 0) {
+        String priceString = values.getAsString ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
+        if (priceString == null) {
             throw new IllegalArgumentException ( "Product requires valid price" );
         }
         // If the supplier is provided, check that it's not null
-        String supplierString = values.getAsString ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME );
+        String supplierString = values.getAsString ( COLUMN_SUPPLIER_NAME );
         if (supplierString == null) {
             throw new IllegalArgumentException ( "Product requires valid supplier" );
         }
         // Check that the phone number is not null
-        String phoneString = values.getAsString ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER );
-        if (phoneString == null) {
+        Double phone = values.getAsDouble ( COLUMN_PHONE_NUMBER );
+        if (phone == null) {
             throw new IllegalArgumentException ( "Supplier requires valid phone number" );
         }
 
@@ -234,25 +236,25 @@ public class ProductProvider extends ContentProvider {
         // check that the price value is valid.
         if (values.containsKey ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE )) {
             // Check that the weight is greater than or equal to 0 kg
-            Integer price = values.getAsInteger ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
-            if (price != null && price < 0) {
+            String price = values.getAsString ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
+            if (price == null) {
                 throw new IllegalArgumentException ( "Product requires valid price" );
             }
         }
         // If the {@link ProductEntry#COLUMN_PRODUCT_SUPPLIER} key is present,
         // check that the price value is valid.
-        if (values.containsKey ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME )) {
+        if (values.containsKey ( COLUMN_SUPPLIER_NAME )) {
             // Check that the weight is greater than or equal to 0 kg
-            Integer supplier = values.getAsInteger ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME );
+            String supplier = values.getAsString (COLUMN_SUPPLIER_NAME );
             if (supplier == null) {
                 throw new IllegalArgumentException ( "Product requires valid supplier" );
             }
         }
         // If the {@link ProductEntry#COLUMN_PRODUCT_PRICE} key is present,
         // check that the price value is valid.
-        if (values.containsKey ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER )) {
+        if (values.containsKey ( COLUMN_PHONE_NUMBER )) {
             // Check that the weight is greater than or equal to 0 kg
-            Integer phone = values.getAsInteger ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER );
+            Integer phone = values.getAsInteger ( COLUMN_PHONE_NUMBER );
             if (phone == null) {
                 throw new IllegalArgumentException ( "Supplier requires valid phone number" );
             }

@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -80,7 +81,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
         ContentValues values = new ContentValues ();
         values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, "Earrings" );
         values.put ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY, " 5 " );
-        values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, " $10 " );
+        values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, " 10 " );
         values.put ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME, " Millanus " );
         values.put ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER, " 3055459778 " );
 

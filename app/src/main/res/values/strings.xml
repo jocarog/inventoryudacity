@@ -50,16 +50,19 @@
 
     <!-- Text hint for price field in the editor [CHAR LIMIT=10] -->
     <string name="hint_product_price">Price</string>
-    <string name="product_content">The products table contains</string>
-    <string name="prod">products.</string>
-    <string name="save_error">Error with saving product</string>
+    <string name="product_content">The Products Table contains</string>
+    <string name="prod">Products.</string>
+    <string name="save_error">Error with saving Product</string>
     <string name="prod_saved_id">Product saved with row id:</string>
     <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
     <string name="empty_view_title_text">It\'s a bit lonely here...</string>
 
     <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
-    <string name="empty_view_subtitle_text">Get started by adding a product</string>
-    <string name="edit_product">Edit a product</string>
-    <string name="add_product">Add a product</string>
+    <string name="empty_view_subtitle_text">Get started by adding a Product</string>
+    <string name="edit_product">Edit a Product</string>
+    <string name="add_product">Add a Product</string>
+    <string name="unsaved_changes_dialog_msg">Changes not Saved!</string>
+    <string name="discard">Discard!</string>
+    <string name="keep_editing">Keep Editing</string>
 
 </resources>

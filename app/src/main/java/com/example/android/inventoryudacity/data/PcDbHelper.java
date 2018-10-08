@@ -37,10 +37,10 @@ public class PcDbHelper extends SQLiteOpenHelper {
         String SQL_CREATE_PRODUCT_TABLE = "CREATE TABLE " + ProductContract.ProductEntry.TABLE_NAME + " ("
                 + ProductContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
-                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " INTEGER, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " TEXT NOT NULL, "
+                + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0, "
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT NOT NULL, "
-                + ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " INTEGER NOT NULL );";
+                + ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " TEXT NOT NULL );";
 
         // Execute the SQL statement
         db.execSQL ( SQL_CREATE_PRODUCT_TABLE );
