@@ -165,7 +165,9 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 // If the new content URI is null, then there was an error with insertion.
                 Toast.makeText ( this, getString ( R.string.editor_insert_pet_failed ),
                         Toast.LENGTH_SHORT ).show ();
-            } else {
+               //Added a closing bracket below here
+            } 
+        }else {
                 // Otherwise this is an EXISTING product, so update the product with content URI: mCurrentProductUri
                 // and pass in the new ContentValues. Pass in null for the selection and selection args
                 // because mCurrentPetUri will already identify the correct row in the database that
@@ -181,8 +183,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                     Toast.makeText ( this, getString ( R.string.prod_saved_id ),
                             Toast.LENGTH_SHORT ).show ();
                 }
-            }
-            }
+            }//And removed the closing bracket below here
+            
     }
 
     @Override
