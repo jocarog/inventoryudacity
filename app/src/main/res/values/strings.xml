@@ -78,5 +78,6 @@
     <string name="empty_phone">Phone Number cannot be blank.</string>
     <string name="empty_price">Price cannot be blank.</string>
     <string name="empty_quantity">Quantity cannot be blank.</string>
+    <string name="sale_product">Sell</string>
 
 </resources>
