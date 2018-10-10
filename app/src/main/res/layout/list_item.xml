@@ -49,5 +49,10 @@
         android:gravity="center"
         android:text="@string/sale_button"
         android:focusable="false"/>
+    <TextView
+        android:id="@+id/sale_view"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:visibility="invisible"/>
 
     </LinearLayout>

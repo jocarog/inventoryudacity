@@ -1,12 +1,16 @@
 package com.example.android.inventoryudacity;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryudacity.data.ProductContract;
 
@@ -53,14 +57,14 @@ public class ProductCursorAdapter extends CursorAdapter {
      *                correct row.
      */
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public void bindView(View view, final Context context, Cursor cursor) {
         // Find individual views that we want to modify in the list item layout
         TextView nameTextView = (TextView) view.findViewById ( R.id.name );
-        TextView quantityTextView = (TextView) view.findViewById ( R.id.quantity );
+        final TextView quantityTextView = (TextView) view.findViewById ( R.id.quantity );
         TextView priceTextView = (TextView) view.findViewById ( R.id.price );
         TextView supplierTextView = (TextView) view.findViewById ( R.id.supplier );
         TextView phoneTextView = (TextView) view.findViewById ( R.id.phone );
-        // Find the columns of pet attributes that we're interested in
+        // Find the columns of product attributes that we're interested in
         int nameColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME );
         int quantityColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY );
         int priceColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
@@ -68,7 +72,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         int phoneColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER );
         // Read the pet attributes from the Cursor for the current product
         String productName = cursor.getString ( nameColumnIndex );
-        String productQuantity = cursor.getString ( quantityColumnIndex );
+        final String productQuantity = cursor.getString ( quantityColumnIndex );
         String productPrice = cursor.getString ( priceColumnIndex );
         String productSupplier = cursor.getString ( supplierColumnIndex );
         String supplierPhone = cursor.getString ( phoneColumnIndex );
@@ -78,5 +82,39 @@ public class ProductCursorAdapter extends CursorAdapter {
         priceTextView.setText ( productPrice );
         supplierTextView.setText ( productSupplier );
         phoneTextView.setText ( supplierPhone );
+        TextView soldButton = (TextView) view.findViewById(R.id.sale_button);
+        final TextView saleTextView = (TextView) view.findViewById(R.id.sale_view);
+        int saleColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry._ID);
+        saleTextView.setText(cursor.getString(saleColumnIndex));
+        //set click listener for this view
+        soldButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // pull in quantity from textview
+                int changeQuantity = Integer.parseInt(quantityTextView.getText().toString().trim());
+                if (changeQuantity > 0) {
+                    //adjust quantity
+                    changeQuantity -= 1;
+                    quantityTextView.setText(Integer.toString(changeQuantity));
+                    // get secret id from view
+                    long id_number = Integer.parseInt(saleTextView.getText().toString());
+                    Uri productSelected = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI,id_number);
+                    ContentValues values = new ContentValues ();
+                    values.put(ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY,quantityTextView.getText().toString());
+                    // update datebase
+                    int rowsAffected = context.getContentResolver().update(productSelected, values, null, null);
+                    // Show a toast message depending on whether or not the update was successful.
+                    if (rowsAffected == 0) {
+                        // If no rows were affected, then there was an error with the update.
+                        Toast.makeText(context, R.string.sale_eror, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(context, R.string.one_sold, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(context, R.string.no_stock, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
 }

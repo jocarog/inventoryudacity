@@ -84,5 +84,8 @@
     <string name="can_sell_yes">In Stock</string>
     <string name="can_sell_no">Out of Stock</string>
     <string name="category_available">Available in Stock</string>
+    <string name="no_stock">out of stock</string>
+    <string name="one_sold">sold 1 product</string>
+    <string name="sale_eror">error with sale</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package com.example.android.inventoryudacity;
 
+import android.annotation.SuppressLint;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
@@ -94,6 +95,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     };
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
@@ -123,7 +125,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Find all relevant views that we will need to read user input from
         mProductEditText = (EditText) findViewById ( R.id.edit_product_name );
         mQuantityEditText = (EditText) findViewById ( R.id.edit_product_quantity );
-        mCanSellSpinner = (Spinner) findViewById(R.id.spinner_available);
+        mCanSellSpinner = (Spinner) findViewById ( R.id.spinner_available );
         mPriceEditText = (EditText) findViewById ( R.id.edit_product_price );
         mSupplierEditText = (EditText) findViewById ( R.id.edit_product_supplier );
         mPhoneEditText = (EditText) findViewById ( R.id.edit_supplier_phone_number );
@@ -133,7 +135,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // or not, if the user tries to leave the editor without saving.
         mProductEditText.setOnTouchListener ( mTouchListener );
         mQuantityEditText.setOnTouchListener ( mTouchListener );
-        mCanSellSpinner.setOnTouchListener(mTouchListener);
+        mCanSellSpinner.setOnTouchListener ( mTouchListener );
         mPriceEditText.setOnTouchListener ( mTouchListener );
         mSupplierEditText.setOnTouchListener ( mTouchListener );
         mPhoneEditText.setOnTouchListener ( mTouchListener );
@@ -480,7 +482,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             String name = cursor.getString ( nameColumnIndex );
             String price = cursor.getString ( priceColumnIndex );
             int quantity = cursor.getInt ( quantityColumnIndex );
-            int canSell = cursor.getInt (canSellColumnIndex);
+            int canSell = cursor.getInt ( canSellColumnIndex );
             int phone = cursor.getInt ( phoneColumnIndex );
             String supplier = cursor.getString ( supplierColumnIndex );
 
@@ -495,13 +497,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Then call setSelection() so that option is displayed on screen as the current selection.
             switch (canSell) {
                 case ProductContract.ProductEntry.CAN_SELL_YES:
-                    mCanSellSpinner.setSelection(1);
+                    mCanSellSpinner.setSelection ( 1 );
                     break;
                 case ProductContract.ProductEntry.CAN_SELL_NO:
-                    mCanSellSpinner.setSelection(2);
+                    mCanSellSpinner.setSelection ( 2 );
                     break;
                 default:
-                    mCanSellSpinner.setSelection(0);
+                    mCanSellSpinner.setSelection ( 0 );
                     break;
             }
         }
@@ -515,7 +517,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mSupplierEditText.setText ( "" );
         mPriceEditText.setText ( "" );
         mPhoneEditText.setText ( "" );
-        mCanSellSpinner.setSelection(0); // Select "Unknown" option
+        mCanSellSpinner.setSelection ( 0 ); // Select "Unknown" option
     }
 
     /**
