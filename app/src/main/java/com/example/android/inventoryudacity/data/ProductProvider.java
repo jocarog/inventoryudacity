@@ -17,6 +17,11 @@ import static com.example.android.inventoryudacity.data.ProductContract.ProductE
 import static com.example.android.inventoryudacity.data.ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME;
 
 public class ProductProvider extends ContentProvider {
+
+    /**
+     * Database helper object
+     */
+    private PcDbHelper mDbHelper;
     /**
      * Tag for the log messages
      */
@@ -61,11 +66,6 @@ public class ProductProvider extends ContentProvider {
     }
 
     /**
-     * Database helper object
-     */
-    private PcDbHelper mDbHelper;
-
-    /**
      * Initialize the provider and the database helper object.
      */
     @Override
@@ -98,7 +98,7 @@ public class ProductProvider extends ContentProvider {
                 break;
             case PRODUCT_ID:
                 // For the PRODUCT_ID code, extract out the ID from the URI.
-                // For an example URI such as "content://com.example.android.pets/products/3",
+                // For an example URI such as "content://com.example.android.products/product/3",
                 // the selection will be "_id=?" and the selection argument will be a
                 // String array containing the actual ID of 3 in this case.
                 //
@@ -139,52 +139,35 @@ public class ProductProvider extends ContentProvider {
     }
 
     /**
-     * Insert a pet into the database with the given content values. Return the new content URI
+     * Insert a product into the database with the given content values. Return the new content URI
      * for that specific row in the database.
      */
-    private Uri insertProduct(Uri uri, ContentValues values) {
-        // Check that the name is not null
-        String nameString = values.getAsString ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME );
-        if (nameString == null) {
-            throw new IllegalArgumentException ( "Product requires a name" );
-        }
-        // If the quantity is provided, check that it's greater than or equal to 0
-        Double quantity = values.getAsDouble ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY );
-        if (quantity != null && quantity < 0) {
-            throw new IllegalArgumentException ( "Product requires valid quantity" );
-        }
-        // If the price is provided, check that it's greater than or equal to $0
-        String priceString = values.getAsString ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
-        if (priceString == null) {
-            throw new IllegalArgumentException ( "Product requires valid price" );
-        }
-        // If the supplier is provided, check that it's not null
-        String supplierString = values.getAsString ( COLUMN_SUPPLIER_NAME );
-        if (supplierString == null) {
-            throw new IllegalArgumentException ( "Product requires valid supplier" );
-        }
-        // Check that the phone number is not null
-        Double phone = values.getAsDouble ( COLUMN_PHONE_NUMBER );
-        if (phone == null) {
-            throw new IllegalArgumentException ( "Supplier requires valid phone number" );
-        }
-
-        // Get writeable database
-        SQLiteDatabase database = mDbHelper.getWritableDatabase ();
-        // Insert the new product with the given values
-        long id = database.insert ( ProductContract.ProductEntry.TABLE_NAME, null, values );
-
-        // If the ID is -1, then the insertion failed. Log an error and return null.
-        if (id == -1) {
-            Log.e ( LOG_TAG, "Failed to insert row for " + uri );
+    private Uri insertProduct(Uri uri, ContentValues values) throws IllegalArgumentException {
+        //check incoming data
+        TypedInfo typedInfo = new TypedInfo ();
+        String name = values.getAsString ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME );
+        String quantity = values.getAsString ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY );
+        String price = values.getAsString ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
+        String supplier = values.getAsString ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME );
+        String phone = values.getAsString ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER );
+        if (typedInfo.TypedInfoTrue ( name, quantity, price, supplier, phone )) {
+            // get DB object
+            SQLiteDatabase database = mDbHelper.getWritableDatabase();
+            // insert new table
+            long id = database.insert(ProductContract.ProductEntry.TABLE_NAME, null, values);
+            // see if it worked or not.
+            if (id == -1) {
+                Toast.makeText(getContext(), "not added", Toast.LENGTH_SHORT).show();
+                return null;
+            }
+            // Notify all listeners that the data has changed
+            getContext().getContentResolver().notifyChange(uri, null);
+            // Once we know the ID of the new row in the table,
+            // return the new URI with the ID appended to the end of it
+            return ContentUris.withAppendedId(uri, id);
+        } else {
             return null;
         }
-        //Notify all the listeners that the Data has changed for the product content URI
-        getContext ().getContentResolver ().notifyChange ( uri, null );
-
-        // Return the new URI with the ID (of the newly inserted row) appended at the end
-        return ContentUris.withAppendedId ( uri, id );
-
     }
 
     /**
@@ -245,7 +228,7 @@ public class ProductProvider extends ContentProvider {
         // check that the price value is valid.
         if (values.containsKey ( COLUMN_SUPPLIER_NAME )) {
             // Check that the weight is greater than or equal to 0 kg
-            String supplier = values.getAsString (COLUMN_SUPPLIER_NAME );
+            String supplier = values.getAsString ( COLUMN_SUPPLIER_NAME );
             if (supplier == null) {
                 throw new IllegalArgumentException ( "Product requires valid supplier" );
             }
@@ -267,11 +250,11 @@ public class ProductProvider extends ContentProvider {
         SQLiteDatabase database = mDbHelper.getWritableDatabase ();
         // Returns the number of database rows affected by the update statement
         // Perform the update on the database and get the number of rows affected
-        int rowsUpdated = database.update(ProductContract.ProductEntry.TABLE_NAME, values, selection, selectionArgs);
+        int rowsUpdated = database.update ( ProductContract.ProductEntry.TABLE_NAME, values, selection, selectionArgs );
         // If 1 or more rows were updated, then notify all listeners that the data at the
         // given URI has changed
         if (rowsUpdated != 0) {
-            getContext().getContentResolver().notifyChange(uri, null);
+            getContext ().getContentResolver ().notifyChange ( uri, null );
         }
         // Return the number of rows updated
         return rowsUpdated;
@@ -296,10 +279,10 @@ public class ProductProvider extends ContentProvider {
                 break;
             // Delete a single row given by the ID in the URI
             case PRODUCT_ID:
-            selection = ProductContract.ProductEntry._ID + "=?";
-            selectionArgs = new String[]{String.valueOf ( ContentUris.parseId ( uri ) )};
-            rowsDeleted = database.delete ( ProductContract.ProductEntry.TABLE_NAME, selection, selectionArgs );
-            break;
+                selection = ProductContract.ProductEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf ( ContentUris.parseId ( uri ) )};
+                rowsDeleted = database.delete ( ProductContract.ProductEntry.TABLE_NAME, selection, selectionArgs );
+                break;
             default:
                 throw new IllegalArgumentException ( "Deletion is not supported for " + uri );
         }
@@ -312,6 +295,7 @@ public class ProductProvider extends ContentProvider {
         // Return the number of rows deleted
         return rowsDeleted;
     }
+
     /**
      * Returns the MIME type of data for the content URI.
      */

@@ -40,4 +40,13 @@
         <item name="android:paddingTop">16dp</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
     </style>
+    <!-- Style for the symbols for an EditText field in the editor -->
+    <style name="EditorSymbolsStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+    </style>
 </resources>

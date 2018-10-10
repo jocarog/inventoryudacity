@@ -2,7 +2,15 @@
 <resources>
     <!-- Margin around the floating action button in CatalogActivity -->
     <dimen name="add_margin">16dp</dimen>
-
-    <!-- Common margin value used throughout the app -->
     <dimen name="activity_margin">16dp</dimen>
+    <!-- Common margin and padding value used within layouts -->
+    <dimen name="layout_margin">4dp</dimen>
+    <!-- Common margin value used throughout the app -->
+    <dimen name="button_width">32dp</dimen>
+    <dimen name="button_height">32dp</dimen>
+    <dimen name="normalTextSize">16sp</dimen>
+    <dimen name="quantity_margin">24dp</dimen>
+    <dimen name="product_item_height">96dp</dimen>
+    <dimen name="activity_medium_margin">8dp</dimen>
+    <dimen name="activity_large_margin">48dp</dimen>
 </resources>

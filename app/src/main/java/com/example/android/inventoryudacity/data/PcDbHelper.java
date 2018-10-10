@@ -38,7 +38,7 @@ public class PcDbHelper extends SQLiteOpenHelper {
                 + ProductContract.ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProductContract.ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0, "
-                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " INTEGER NOT NULL, "
+                + ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE + " DOUBLE NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME + " TEXT NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_PHONE_NUMBER + " TEXT NOT NULL );";
 

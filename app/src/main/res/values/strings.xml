@@ -52,7 +52,7 @@
     <string name="hint_product_price">Price</string>
     <string name="product_content">The Products Table contains</string>
     <string name="prod">Products.</string>
-    <string name="save_error">Error with saving Product</string>
+    <string name="save_error">Error saving Product</string>
     <string name="prod_saved_id">Product saved with row id:</string>
     <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
     <string name="empty_view_title_text">It\'s a bit lonely here...</string>
@@ -64,5 +64,19 @@
     <string name="unsaved_changes_dialog_msg">Changes not Saved!</string>
     <string name="discard">Discard!</string>
     <string name="keep_editing">Keep Editing</string>
+    <string name="delete_dialog_msg">Delete Product</string>
+    <string name="editor_delete_product_failed">Error Deleting Product</string>
+    <string name="editor_delete_book_successful">Product Deleted Succesfully!</string>
+    <string name="delete_button">delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="decrement">decrease</string>
+    <string name="increment">increase</string>
+    <string name="increment_button">add product</string>
+    <string name="category_supplier">Supplier</string>
+    <string name="contact_supplier">Call</string>
+    <string name="empty_name">Product Name cannot be blank.</string>
+    <string name="empty_phone">Phone Number cannot be blank.</string>
+    <string name="empty_price">Price cannot be blank.</string>
+    <string name="empty_quantity">Quantity cannot be blank.</string>
 
 </resources>
