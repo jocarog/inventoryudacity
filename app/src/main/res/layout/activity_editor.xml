@@ -94,7 +94,7 @@
                 android:text="@string/category_quantity" />
 
             <Button
-                android:id="@+id/decrement_btn"
+                android:id="@+id/decrement_button"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginLeft="@dimen/activity_large_margin"
@@ -124,7 +124,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/increment_btn"
+                android:id="@+id/increment_button"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:layout_marginEnd="@dimen/activity_medium_margin"
@@ -172,16 +172,44 @@
                     android:inputType="phone" />
             </LinearLayout>
         </LinearLayout>
+        <!-- Available category -->
+        <LinearLayout
+            android:id="@+id/container_available"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Label -->
+            <TextView
+                style="@style/CategoryStyle"
+                android:text="@string/category_available" />
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <!-- Gender drop-down spinner -->
+                <Spinner
+                    android:id="@+id/spinner_available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:paddingRight="16dp"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+        </LinearLayout>
 
         <Button
-            android:id="@+id/sale_product"
+            android:id="@+id/call_supplier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="@dimen/activity_large_margin"
             android:background="@drawable/icons8_rectangular_24"
             android:padding="@dimen/activity_margin"
-            android:text="@string/sale_product"
+            android:text="@string/call_supplier"
             android:textAlignment="center"
             android:textAllCaps="false"
             style="@style/EditorFieldStyle" />

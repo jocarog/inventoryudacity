@@ -98,6 +98,12 @@ public final class ProductContract {
          * Type Integer
          */
         public final static String COLUMN_PHONE_NUMBER = "phone";
+// Sell option
+        public final static String COLUMNS_PRODUCT_CAN_SELL = "sell";
+        //Possible values for if the product can be sold or not.
+        public static final int CAN_SELL_UNKNOWN = 0;
+        public static final int CAN_SELL_YES = 1;
+        public static final int CAN_SELL_NO = 2;
 
 
     }

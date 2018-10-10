@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -67,9 +68,19 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
     private EditText mPhoneEditText;
 
     /**
-     * Boolean flag that keeps track of whether the pet has been edited (true) or not (false)
+     * Boolean flag that keeps track of whether the product has been edited (true) or not (false)
      */
     private boolean mProductHasChanged = false;
+    //setup spinner
+    private Spinner mCanSellSpinner;
+    //sell button
+    private int mCanSell = ProductContract.ProductEntry.CAN_SELL_UNKNOWN;
+    //buttons to increase and decrease quantity
+    private Button moreButton;
+    private Button lessButton;
+    //call button
+    private Button phoneButton;
+
     /**
      * OnTouchListener that listens for any user touches on a View, implying that they are modifying
      * the view, and we change the mPetHasChanged boolean to true.
@@ -112,6 +123,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Find all relevant views that we will need to read user input from
         mProductEditText = (EditText) findViewById ( R.id.edit_product_name );
         mQuantityEditText = (EditText) findViewById ( R.id.edit_product_quantity );
+        mCanSellSpinner = (Spinner) findViewById(R.id.spinner_available);
         mPriceEditText = (EditText) findViewById ( R.id.edit_product_price );
         mSupplierEditText = (EditText) findViewById ( R.id.edit_product_supplier );
         mPhoneEditText = (EditText) findViewById ( R.id.edit_supplier_phone_number );
@@ -121,9 +133,100 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // or not, if the user tries to leave the editor without saving.
         mProductEditText.setOnTouchListener ( mTouchListener );
         mQuantityEditText.setOnTouchListener ( mTouchListener );
+        mCanSellSpinner.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener ( mTouchListener );
         mSupplierEditText.setOnTouchListener ( mTouchListener );
         mPhoneEditText.setOnTouchListener ( mTouchListener );
+        //find buttons
+        moreButton = (Button) findViewById ( R.id.increment_button );
+        lessButton = (Button) findViewById ( R.id.decrement_button );
+        phoneButton = (Button) findViewById ( R.id.call_supplier );
+        setupSpinner ();
+        // set up buttons
+        moreButton.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                Integer changeQuantity;
+                // pull the current value
+                try {
+                    changeQuantity = Integer.parseInt ( mQuantityEditText.getText ().toString () );
+                    changeQuantity += 1;
+                    //check for to low of value
+                    if (changeQuantity > 100) {
+                        changeQuantity = 100;
+                    }
+                } catch (Exception e) {
+                    // if the value in the field is invalid set it to 1
+                    changeQuantity = 1;
+                }
+                // update field
+                mQuantityEditText.setText ( Integer.toString ( changeQuantity ) );
+            }
+        } );
+        lessButton.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                Integer changeQuantity;
+                // pull the current value
+                try {
+                    changeQuantity = Integer.parseInt ( mQuantityEditText.getText ().toString () );
+                    changeQuantity -= 1;
+                    //check for to low of value
+                    if (changeQuantity < 0) {
+                        changeQuantity = 0;
+                    }
+                } catch (Exception e) {
+                    // if the value in the field is invalid set it to 0
+                    changeQuantity = 0;
+                }
+                // update field
+                mQuantityEditText.setText ( Integer.toString ( changeQuantity ) );
+            }
+        } );
+        phoneButton.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent ( Intent.ACTION_DIAL );
+                intent.setData ( Uri.parse ( "tel:" + mPhoneEditText.getText ().toString () ) );
+                startActivity ( intent );
+            }
+        } );
+    }
+
+    /**
+     * Setup the dropdown spinner that allows the user to select the availability of the book.
+     */
+    private void setupSpinner() {
+        // Create adapter for spinner. The list options are from the String array it will use
+        // the spinner will use the default layout
+        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource ( this,
+                R.array.array_available_options, android.R.layout.simple_spinner_item );
+        // Specify dropdown layout style - simple list view with 1 item per line
+        genderSpinnerAdapter.setDropDownViewResource ( android.R.layout.simple_dropdown_item_1line );
+        // Apply the adapter to the spinner
+        mCanSellSpinner.setAdapter ( genderSpinnerAdapter );
+        // Set the integer mSelected to the constant values
+        mCanSellSpinner.setOnItemSelectedListener ( new AdapterView.OnItemSelectedListener () {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition ( position );
+                if (!TextUtils.isEmpty ( selection )) {
+                    if (selection.equals ( getString ( R.string.can_sell_yes ) )) {
+                        mCanSell = ProductContract.ProductEntry.CAN_SELL_YES;
+                    } else if (selection.equals ( getString ( R.string.can_sell_no ) )) {
+                        mCanSell = ProductContract.ProductEntry.CAN_SELL_NO;
+                    } else {
+                        mCanSell = ProductContract.ProductEntry.CAN_SELL_UNKNOWN;
+                    }
+                }
+            }
+
+            // Because AdapterView is an abstract class, onNothingSelected must be defined
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                mCanSell = ProductContract.ProductEntry.CAN_SELL_UNKNOWN;
+            }
+        } );
     }
 
     /**
@@ -159,8 +262,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 TextUtils.isEmpty ( supplierString ) && TextUtils.isEmpty ( priceString )
                 && TextUtils.isEmpty ( phoneString )) {
 
-        // and check if all the fields in the editor are blank
-
+            // and check if all the fields in the editor are blank
 
 
             // Since no fields were modified, we can return early without creating a new pet.
@@ -175,22 +277,15 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         // Create a ContentValues object where column names are the keys,
 
         // and pet attributes from the editor are the values.
-
         ContentValues values = new ContentValues ();
-
         values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString );
-
         values.put ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY, quantityString );
-
         values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE, priceString );
-
         values.put ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME, supplierString );
-
         values.put ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER, phoneString );
-
+        values.put ( ProductContract.ProductEntry.COLUMNS_PRODUCT_CAN_SELL, mCanSell );
 
         // Determine if this is a new or existing pet by checking if mCurrentPetUri is null or not
-
         if (mCurrentProductUri == null) {
 
             // This is a NEW product, so insert a new pet into the provider,
@@ -349,6 +444,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 ProductContract.ProductEntry._ID,
                 ProductContract.ProductEntry.COLUMN_PRODUCT_NAME,
                 ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY,
+                ProductContract.ProductEntry.COLUMNS_PRODUCT_CAN_SELL,
                 ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE,
                 ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME,
                 ProductContract.ProductEntry.COLUMN_PHONE_NUMBER};
@@ -375,6 +471,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Find the columns of product attributes that we're interested in
             int nameColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME );
             int quantityColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY );
+            int canSellColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMNS_PRODUCT_CAN_SELL );
             int priceColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PRODUCT_PRICE );
             int supplierColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_SUPPLIER_NAME );
             int phoneColumnIndex = cursor.getColumnIndex ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER );
@@ -383,6 +480,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             String name = cursor.getString ( nameColumnIndex );
             String price = cursor.getString ( priceColumnIndex );
             int quantity = cursor.getInt ( quantityColumnIndex );
+            int canSell = cursor.getInt (canSellColumnIndex);
             int phone = cursor.getInt ( phoneColumnIndex );
             String supplier = cursor.getString ( supplierColumnIndex );
 
@@ -392,6 +490,20 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             mSupplierEditText.setText ( supplier );
             mQuantityEditText.setText ( Integer.toString ( quantity ) );
             mPhoneEditText.setText ( Integer.toString ( phone ) );
+            // Can sell is a dropdown spinner, so map the constant value from the database
+            // into one of the dropdown options (0 is Unknown, 1 is yes, 2 is no).
+            // Then call setSelection() so that option is displayed on screen as the current selection.
+            switch (canSell) {
+                case ProductContract.ProductEntry.CAN_SELL_YES:
+                    mCanSellSpinner.setSelection(1);
+                    break;
+                case ProductContract.ProductEntry.CAN_SELL_NO:
+                    mCanSellSpinner.setSelection(2);
+                    break;
+                default:
+                    mCanSellSpinner.setSelection(0);
+                    break;
+            }
         }
     }
 
@@ -403,6 +515,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         mSupplierEditText.setText ( "" );
         mPriceEditText.setText ( "" );
         mPhoneEditText.setText ( "" );
+        mCanSellSpinner.setSelection(0); // Select "Unknown" option
     }
 
     /**

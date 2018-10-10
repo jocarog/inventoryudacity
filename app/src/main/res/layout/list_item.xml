@@ -40,5 +40,14 @@
         android:fontFamily="sans-serif"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="#AEB6BD"  />
+    <TextView
+        android:id="@+id/sale_button"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/icons8_rectangular_24"
+        android:gravity="center"
+        android:text="@string/sale_button"
+        android:focusable="false"/>
 
     </LinearLayout>

@@ -79,5 +79,10 @@
     <string name="empty_price">Price cannot be blank.</string>
     <string name="empty_quantity">Quantity cannot be blank.</string>
     <string name="sale_product">Sell</string>
+    <string name="sale_button">Sale</string>
+    <string name="call_supplier">Call</string>
+    <string name="can_sell_yes">In Stock</string>
+    <string name="can_sell_no">Out of Stock</string>
+    <string name="category_available">Available in Stock</string>
 
 </resources>
