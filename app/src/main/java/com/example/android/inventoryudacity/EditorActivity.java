@@ -379,8 +379,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             case R.id.action_save:
                 // Save pet to database
                 saveProduct ();
-                // Exit activity
-                finish ();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
