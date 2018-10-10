@@ -302,13 +302,13 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
                 // If the new content URI is null, then there was an error with insertion.
 
-                Toast.makeText ( this, getString ( R.string.editor_insert_pet_failed ),
+                Toast.makeText ( this, getString ( R.string.error_saving ),
 
                         Toast.LENGTH_SHORT ).show ();
 
             } else {
 
-                Toast.makeText ( this, "Product saved successfully",
+                Toast.makeText ( this, getString(R.string.product_saved),
 
                         Toast.LENGTH_SHORT ).show ();
 
@@ -379,6 +379,8 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             case R.id.action_save:
                 // Save pet to database
                 saveProduct ();
+                // Exit activity
+                finish ();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
