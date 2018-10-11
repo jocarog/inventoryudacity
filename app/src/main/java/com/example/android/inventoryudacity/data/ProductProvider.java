@@ -152,19 +152,19 @@ public class ProductProvider extends ContentProvider {
         String phone = values.getAsString ( ProductContract.ProductEntry.COLUMN_PHONE_NUMBER );
         if (typedInfo.TypedInfoTrue ( name, quantity, price, supplier, phone )) {
             // get DB object
-            SQLiteDatabase database = mDbHelper.getWritableDatabase();
+            SQLiteDatabase database = mDbHelper.getWritableDatabase ();
             // insert new table
-            long id = database.insert(ProductContract.ProductEntry.TABLE_NAME, null, values);
+            long id = database.insert ( ProductContract.ProductEntry.TABLE_NAME, null, values );
             // see if it worked or not.
             if (id == -1) {
-                Toast.makeText(getContext(), "not added", Toast.LENGTH_SHORT).show();
+                Toast.makeText ( getContext (), "not added", Toast.LENGTH_SHORT ).show ();
                 return null;
             }
             // Notify all listeners that the data has changed
-            getContext().getContentResolver().notifyChange(uri, null);
+            getContext ().getContentResolver ().notifyChange ( uri, null );
             // Once we know the ID of the new row in the table,
             // return the new URI with the ID appended to the end of it
-            return ContentUris.withAppendedId(uri, id);
+            return ContentUris.withAppendedId ( uri, id );
         } else {
             return null;
         }
@@ -198,7 +198,7 @@ public class ProductProvider extends ContentProvider {
      * Return the number of rows that were successfully updated.
      */
     private int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        // If the {@link ProductEntry#COLUMN_PET_NAME} key is present,
+        // If the {@link ProductEntry#COLUMN_PROUCT_NAME} key is present,
         // check that the name value is not null.
         if (values.containsKey ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME )) {
             String name = values.getAsString ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME );
@@ -236,15 +236,11 @@ public class ProductProvider extends ContentProvider {
         // If the {@link ProductEntry#COLUMN_PRODUCT_PRICE} key is present,
         // check that the price value is valid.
         if (values.containsKey ( COLUMN_PHONE_NUMBER )) {
-            // Check that the weight is greater than or equal to 0 kg
-            Integer phone = values.getAsInteger ( COLUMN_PHONE_NUMBER );
+            // Check that the phone number is valid
+            String phone = values.getAsString ( COLUMN_PHONE_NUMBER );
             if (phone == null) {
                 throw new IllegalArgumentException ( "Supplier requires valid phone number" );
             }
-        }
-        // If there are no values to update, then don't try to update the database
-        if (values.size () == 0) {
-            return 0;
         }
         // Otherwise, get writeable database to update the data
         SQLiteDatabase database = mDbHelper.getWritableDatabase ();

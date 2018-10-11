@@ -89,5 +89,6 @@
     <string name="sale_eror">error with sale</string>
     <string name="error_saving">Error saving product</string>
     <string name="product_saved">Product saved successfully</string>
+    <string name="empty_supplier">Supplier name missing</string>
 
 </resources>

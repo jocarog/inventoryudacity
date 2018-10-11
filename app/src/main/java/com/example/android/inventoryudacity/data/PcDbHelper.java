@@ -49,7 +49,7 @@ public class PcDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+// no on upgrade code yet reference:
     }
 
     @Override

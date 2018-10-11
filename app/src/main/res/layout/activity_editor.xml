@@ -169,7 +169,7 @@
                     android:id="@+id/edit_supplier_phone_number"
                     style="@style/EditorFieldStyle"
                     android:hint="@string/hint_phone_number"
-                    android:inputType="phone" />
+                    android:inputType="phone"/>
             </LinearLayout>
         </LinearLayout>
         <!-- Available category -->

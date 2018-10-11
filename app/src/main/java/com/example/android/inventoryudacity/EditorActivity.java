@@ -114,7 +114,7 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // (It doesn't make sense to delete a product that hasn't been created yet.)
             invalidateOptionsMenu ();
         } else {
-            // Otherwise this is an existing pet, so change app bar to say "Edit Product"
+            // Otherwise this is an existing product, so change app bar to say "Edit Product"
             setTitle ( getString ( R.string.edit_product ) );
 
             // Initialize a loader to read the product data from the database
@@ -237,17 +237,11 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
 
     private void saveProduct() {
         // Read from input fields
-
         // Use trim to eliminate leading or trailing white space
-
         String nameString = mProductEditText.getText ().toString ().trim ();
-
         String quantityString = mQuantityEditText.getText ().toString ().trim ();
-
         String priceString = mPriceEditText.getText ().toString ().trim ();
-
         String supplierString = mSupplierEditText.getText ().toString ().trim ();
-
         String phoneString = mPhoneEditText.getText ().toString ().trim ();
         // turn the string to int for data base.
         int quantityInt;
@@ -265,20 +259,14 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 && TextUtils.isEmpty ( phoneString )) {
 
             // and check if all the fields in the editor are blank
-
-
-            // Since no fields were modified, we can return early without creating a new pet.
-
-            // No need to create ContentValues and no need to do any ContentProvider operations.
-
-            return;
-
+            if (!typedInfo ( nameString, quantityString, priceString, supplierString, phoneString )) {
+                // Since no fields were modified, we can return early without creating a new book.
+                // No need to create ContentValues and no need to do any ContentProvider operations.
+                return;
+            }
         }
-
-
         // Create a ContentValues object where column names are the keys,
-
-        // and pet attributes from the editor are the values.
+        // and product attributes from the editor are the values.
         ContentValues values = new ContentValues ();
         values.put ( ProductContract.ProductEntry.COLUMN_PRODUCT_NAME, nameString );
         values.put ( ProductContract.ProductEntry.COLUMN_PROUCT_QUANTITY, quantityString );
@@ -291,57 +279,37 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
         if (mCurrentProductUri == null) {
 
             // This is a NEW product, so insert a new pet into the provider,
-
             // returning the content URI for the new pet.
-
             Uri newUri = getContentResolver ().insert ( ProductContract.ProductEntry.CONTENT_URI, values );
-
             // Show a toast message depending on whether or not the insertion was successful.
-
             if (newUri == null) {
-
                 // If the new content URI is null, then there was an error with insertion.
-
                 Toast.makeText ( this, getString ( R.string.error_saving ),
-
                         Toast.LENGTH_SHORT ).show ();
-
             } else {
-
-                Toast.makeText ( this, getString(R.string.product_saved),
-
+                Toast.makeText ( this, getString ( R.string.product_saved ),
                         Toast.LENGTH_SHORT ).show ();
-
             }
-
         } else {
 
             // Otherwise this is an EXISTING product, so update the product with content URI: mCurrentProductUri
-
             // and pass in the new ContentValues. Pass in null for the selection and selection args
-
-            // because mCurrentPetUri will already identify the correct row in the database that
-
+            // because mCurrentProductUri will already identify the correct row in the database that
             // we want to modify.
-
             int rowsAffected = getContentResolver ().update ( mCurrentProductUri, values, null, null );
-
+            if (!typedInfo ( nameString, quantityString, priceString, supplierString, phoneString )) {
+                // Since no fields were modified, we can return early without creating a new book.
+                // No need to create ContentValues and no need to do any ContentProvider operations.
+                return;
+            }
             // Show a toast message depending on whether or not the update was successful.
-
             if (rowsAffected == 0) {
-
                 // If no rows were affected, then there was an error with the update.
-
                 Toast.makeText ( this, getString ( R.string.save_error ),
-
                         Toast.LENGTH_SHORT ).show ();
-
             } else {
-
                 // Otherwise, the update was successful and we can display a toast.
-
                 Toast.makeText ( this, getString ( R.string.prod_saved_id ),
-
                         Toast.LENGTH_SHORT ).show ();
             }
         }
@@ -380,7 +348,6 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
                 // Save pet to database
                 saveProduct ();
                 // Exit activity
-                finish ();
                 return true;
             // Respond to a click on the "Delete" menu option
             case R.id.action_delete:
@@ -596,6 +563,32 @@ public class EditorActivity extends AppCompatActivity implements LoaderManager.L
             // Close the activity
             finish ();
         }
+    }
+
+    private boolean typedInfo(String nameString, String quantity, String
+            price, String supplierString, String phoneString) {
+        if (TextUtils.isEmpty ( nameString )) {
+            Toast.makeText ( this, getResources ().getString ( R.string.empty_name ), Toast.LENGTH_SHORT ).show ();
+            return false;
+        }
+        if (TextUtils.isEmpty ( quantity )) {
+            Toast.makeText ( this, getResources ().getString ( R.string.empty_quantity ), Toast.LENGTH_SHORT ).show ();
+            return false;
+        }
+        if (TextUtils.isEmpty ( supplierString )) {
+            Toast.makeText ( this, getResources ().getString ( R.string.empty_supplier ), Toast.LENGTH_SHORT ).show ();
+            return false;
+        }
+        if (TextUtils.isEmpty ( price )) {
+            Toast.makeText ( this, getResources ().getString ( R.string.empty_price ), Toast.LENGTH_SHORT ).show ();
+            return false;
+        }
+        if (TextUtils.isEmpty ( phoneString )) {
+            Toast.makeText ( this, getResources ().getString ( R.string.empty_phone ), Toast.LENGTH_SHORT ).show ();
+            return false;
+        }
+
+        return true;
     }
 
 }
